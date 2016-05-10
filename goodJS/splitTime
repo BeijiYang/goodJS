@@ -1,0 +1,15 @@
+function a(time) {
+    var t = time.split(':'),
+        s = ['h', 'm', 's'],
+        i = 0;
+    for( ; i < t.length; i++ ) {
+        t[i] = parseInt(t[i]) == 0 ? '' : parseInt(t[i]) + s[i + s.length - t.length];
+    }
+    return t.join('');
+}
+setTimeout(function() {
+alert(a('00:38:00'));//当某一位为零，由三目表达式，设定为0。
+alert(a('00:00:59'));
+alert(a('01:25:59'));
+alert(a('01:23')); //当高位缺失（如只有分，秒），通过s[i + s.length - t.length];来略过缺失位的单位。
+}, 1000);
