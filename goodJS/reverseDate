@@ -1,0 +1,5 @@
+var newDate = '2015-04-10'.split('-').reverse().join('.')
+//                         ^ delivers Array
+//                                    ^reverses (2 -> 0, 1 -> 1, 0 -> 2)
+//                                              ^ join to 10.04.2015
+    
