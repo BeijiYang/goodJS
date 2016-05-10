@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>定时器</title>
+<script type="text/javascript">
+  var int=setInterval(clock, 100);
+  var attime;
+  function clock(){
+    var time=new Date();          
+    attime= (time+"").split(" ");//typeof(time) "object"。通过 +"" 的方式，转为string。再split之。
+    //split将字符串 本身 分割为字符串数组。
+    
+    document.getElementById("clock").value = attime[4];
+  }
+ 
+</script>
+</head>
+<body>
+<form>
+<input type="text" id="clock" size="50"  />
+</form>
+</body>
+</html>
