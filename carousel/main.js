@@ -43,26 +43,28 @@ window.onload = function() {
     go();  
   }  
   prev.onclick = function() {
+    if(animated) {
+      return;
+    }
     if(index == 1){
       index = 3;
     }else{
     index -= 1;
     }
-    if(!animated){
-      showButton();
-      animate(+500); 
-    } 
+    showButton();
+    animate(+500); 
   }
   next.onclick = function() {
+    if(animated) {
+      return;
+    }
     if(index == 3){
       index = 1;
     }else{
     index += 1;
     }
-    if(!animated){
-      showButton();
-      animate(-500);
-    }
+    showButton();
+    animate(-500);
   }
 for(var i=0; i<buttons.length; i++){
   buttons[i].onclick = function() {
