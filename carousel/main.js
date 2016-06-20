@@ -5,32 +5,51 @@ window.onload = function() {
   var prev = document.getElementById("prev");
   var next = document.getElementById("next");
   var index = 1;
+  var animated = false;
+  
 
   function showButton() {
     for (var i = 0 ; i < buttons.length; i++){
       if(buttons[i].className == 'on'){
         buttons[i].className = "";
+        break;
       }
     }
     buttons[index - 1].className = 'on';
   }
   function animate(offset) {
-    var newLeft = parseInt(list.style.left) +offset;
-    list.style.left = newLeft + 'px' ; 
-    if(newLeft > -500){
-      list.style.left = parseInt(-1500) + 'px'; 
-    }else if(newLeft < -1500){
-      list.style.left = parseInt(-500) + 'px';
+    animated = true;
+    var newLeft = parseInt(list.style.left) +offset; //最后的 ＝ 现在的 ＋ 要走的
+    var time = 300;
+    var interval = 10;
+    var speed = offset/(time/interval); //  总路程／移动次数,每次移动的方向与大小
+
+    function go() {
+      if((speed<0 && parseInt(list.style.left)>newLeft) || (speed>0 && parseInt(list.style.left)<newLeft)){
+        list.style.left = parseInt(list.style.left) + speed + 'px';
+        setTimeout(go, interval);
+      }else{
+        animated = false;
+        list.style.left = newLeft + 'px' ; 
+            if(newLeft > -500){
+               list.style.left = parseInt(-1500) + 'px'; 
+            }else if(newLeft < -1500){
+              list.style.left = parseInt(-500) + 'px';
+        }
+      }
     }
-  }  //下面两句功能的封装
+    go();  
+  }  
   prev.onclick = function() {
     if(index == 1){
       index = 3;
     }else{
     index -= 1;
     }
-    showButton();
-    animate(+500);  
+    if(!animated){
+      showButton();
+      animate(+500); 
+    } 
   }
   next.onclick = function() {
     if(index == 3){
@@ -38,9 +57,24 @@ window.onload = function() {
     }else{
     index += 1;
     }
-    showButton();
-    animate(-500);
+    if(!animated){
+      showButton();
+      animate(-500);
+    }
   }
-
+for(var i=0; i<buttons.length; i++){
+  buttons[i].onclick = function() {
+    if(this.className == "on"){
+      return;
+    }
+    var myIndex = parseInt(this.getAttribute('index'));
+    var offset = (myIndex - index) * -500;
+    if(!animated){
+      animate(offset);
+      index = myIndex;
+      showButton();
+    }
+  }
+}
 
 }
