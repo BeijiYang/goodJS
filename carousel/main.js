@@ -6,6 +6,8 @@ window.onload = function() {
   var next = document.getElementById("next");
   var index = 1;
   var animated = false;
+  var interval = 2000;
+  var timer;
   
 
   function showButton() {
@@ -27,8 +29,8 @@ window.onload = function() {
     function go() {
       if((speed<0 && parseInt(list.style.left)>newLeft) || (speed>0 && parseInt(list.style.left)<newLeft)){
         list.style.left = parseInt(list.style.left) + speed + 'px';
-        setTimeout(go, interval);
-      }else{
+        setTimeout(go, interval);  //动画
+      }else{                      //跳转以实现无线轮播
         animated = false;
         list.style.left = newLeft + 'px' ; 
             if(newLeft > -500){
@@ -76,5 +78,16 @@ for(var i=0; i<buttons.length; i++){
     }
   }
 }
+function play() {
+    timer = setInterval(function() {
+      next.onclick();
+    }, 2000);
+}
+function stop() {
+  clearInterval(timer);
+}
+container.onmouseover = stop;
+container.onmouseout = play;
 
+play(); //开始的自动播放
 }
